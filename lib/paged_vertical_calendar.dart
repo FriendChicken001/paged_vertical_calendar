@@ -318,7 +318,6 @@ class _MonthView extends StatelessWidget {
     DateTime firstDay = week.firstDay;
 
     return TableRow(
-      decoration: new BoxDecoration(color: Colors.green),
       children: List<Widget>.generate(
         DateTime.daysPerWeek,
         (int position) {
