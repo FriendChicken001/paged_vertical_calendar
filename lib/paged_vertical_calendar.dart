@@ -318,6 +318,7 @@ class _MonthView extends StatelessWidget {
     DateTime firstDay = week.firstDay;
 
     return TableRow(
+      decoration: new BoxDecoration(color: Colors.green),
       children: List<Widget>.generate(
         DateTime.daysPerWeek,
         (int position) {
@@ -329,14 +330,7 @@ class _MonthView extends StatelessWidget {
 
           if ((position + 1) < week.firstDay.weekday ||
               (position + 1) > week.lastDay.weekday) {
-            return AspectRatio(
-              aspectRatio: 1.0,
-              child: InkWell(
-                onTap: onDayPressed == null ? null : () => onDayPressed!(day),
-                child: dayBuilder?.call(context, day) ??
-                    _DefaultDayView(date: day),
-              ),
-            );
+            return const SizedBox();
           } else {
             return AspectRatio(
               aspectRatio: 1.0,
