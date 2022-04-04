@@ -329,7 +329,14 @@ class _MonthView extends StatelessWidget {
 
           if ((position + 1) < week.firstDay.weekday ||
               (position + 1) > week.lastDay.weekday) {
-            return const SizedBox();
+            return AspectRatio(
+              aspectRatio: 1.0,
+              child: InkWell(
+                onTap: onDayPressed == null ? null : () => onDayPressed!(day),
+                child: dayBuilder?.call(context, day) ??
+                    _DefaultDayView(date: day),
+              ),
+            );
           } else {
             return AspectRatio(
               aspectRatio: 1.0,
