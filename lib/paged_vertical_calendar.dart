@@ -38,6 +38,8 @@ class PagedVerticalCalendar extends StatefulWidget {
     this.scrollController,
     this.listPadding = EdgeInsets.zero,
     this.initialDate,
+    this.colorsBorder,
+    this.widthBorder,
   });
 
   /// the [DateTime] to start the calendar from, if no [startDate] is provided
