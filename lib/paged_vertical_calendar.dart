@@ -285,12 +285,16 @@ class _MonthView extends StatelessWidget {
     this.monthBuilder,
     this.dayBuilder,
     this.onDayPressed,
+    this.colorsBorder,
+    this.widthBorder,
   });
 
+  final double? widthBorder;
   final Month month;
   final MonthBuilder? monthBuilder;
   final DayBuilder? dayBuilder;
   final ValueChanged<DateTime>? onDayPressed;
+  final Color? colorsBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -304,7 +308,9 @@ class _MonthView extends StatelessWidget {
             ),
         Table(
           border: TableBorder.symmetric(
-              inside: BorderSide(width: 2, color: Colors.blue)),
+              inside: BorderSide(
+                  width: widthBorder ?? 1,
+                  color: colorsBorder ?? Colors.black)),
           children: month.weeks.map((Week week) {
             return _generateWeekRow(context, week);
           }).toList(growable: false),
