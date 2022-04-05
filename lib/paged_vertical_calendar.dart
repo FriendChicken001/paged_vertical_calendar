@@ -331,8 +331,9 @@ class _MonthView extends StatelessWidget {
         Table(
           border: TableBorder.symmetric(
               inside: BorderSide(
-                  width: widthBorder ?? 1,
-                  color: colorsBorder ?? Colors.black)),
+                  width: widthBorder ?? 1, color: colorsBorder ?? Colors.black),
+              outside:
+                  BorderSide(width: 2, color: colorsBorder ?? Colors.black)),
           children: month.weeks.map((Week week) {
             return _generateWeekRow(context, week);
           }).toList(growable: false),
