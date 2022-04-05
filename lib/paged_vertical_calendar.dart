@@ -24,23 +24,24 @@ import 'package:paged_vertical_calendar/utils/date_utils.dart';
 ///        ),
 /// ```
 class PagedVerticalCalendar extends StatefulWidget {
-  PagedVerticalCalendar({
-    this.startDate,
-    this.endDate,
-    this.monthBuilder,
-    this.dayBuilder,
-    this.addAutomaticKeepAlives = false,
-    this.onDayPressed,
-    this.onMonthLoaded,
-    this.onPaginationCompleted,
-    this.invisibleMonthsThreshold = 1,
-    this.physics,
-    this.scrollController,
-    this.listPadding = EdgeInsets.zero,
-    this.initialDate,
-    this.colorsBorder,
-    this.widthBorder,
-  });
+  PagedVerticalCalendar(
+      {this.startDate,
+      this.endDate,
+      this.monthBuilder,
+      this.dayBuilder,
+      this.addAutomaticKeepAlives = false,
+      this.onDayPressed,
+      this.onMonthLoaded,
+      this.onPaginationCompleted,
+      this.invisibleMonthsThreshold = 1,
+      this.physics,
+      this.scrollController,
+      this.listPadding = EdgeInsets.zero,
+      this.initialDate,
+      this.colorsBorder,
+      this.widthBorder,
+      this.height,
+      this.width});
 
   /// the [DateTime] to start the calendar from, if no [startDate] is provided
   /// `DateTime.now()` will be used
@@ -97,6 +98,9 @@ class PagedVerticalCalendar extends StatefulWidget {
   final double? widthBorder;
 
   final Color? colorsBorder;
+
+  final double? height;
+  final double? width;
 
   @override
   _PagedVerticalCalendarState createState() => _PagedVerticalCalendarState();
@@ -249,6 +253,8 @@ class _PagedVerticalCalendarState extends State<PagedVerticalCalendar> {
                 builderDelegate: PagedChildBuilderDelegate<Month>(
                   itemBuilder: (BuildContext context, Month month, int index) {
                     return _MonthView(
+                      height: height,
+                      width: width,
                       colorsBorder: widget.colorsBorder,
                       widthBorder: widget.widthBorder,
                       month: month,
@@ -297,6 +303,8 @@ class _MonthView extends StatelessWidget {
     this.onDayPressed,
     this.colorsBorder,
     this.widthBorder,
+    this.height,
+    this.width,
   });
 
   final double? widthBorder;
@@ -305,6 +313,8 @@ class _MonthView extends StatelessWidget {
   final DayBuilder? dayBuilder;
   final ValueChanged<DateTime>? onDayPressed;
   final Color? colorsBorder;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -349,14 +359,26 @@ class _MonthView extends StatelessWidget {
               (position + 1) > week.lastDay.weekday) {
             return const SizedBox();
           } else {
-            return AspectRatio(
-              aspectRatio: 1.0,
-              child: InkWell(
-                onTap: onDayPressed == null ? null : () => onDayPressed!(day),
-                child: dayBuilder?.call(context, day) ??
-                    _DefaultDayView(date: day),
-              ),
-            );
+            if (height != null) {
+              return Container(
+                height: height,
+                width: width,
+                child: InkWell(
+                  onTap: onDayPressed == null ? null : () => onDayPressed!(day),
+                  child: dayBuilder?.call(context, day) ??
+                      _DefaultDayView(date: day),
+                ),
+              );
+            } else {
+              return AspectRatio(
+                aspectRatio: 1,
+                child: InkWell(
+                  onTap: onDayPressed == null ? null : () => onDayPressed!(day),
+                  child: dayBuilder?.call(context, day) ??
+                      _DefaultDayView(date: day),
+                ),
+              );
+            }
           }
         },
         growable: false,
