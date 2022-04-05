@@ -92,6 +92,10 @@ class PagedVerticalCalendar extends StatefulWidget {
   /// if inititial date is nulll, the start date will be used
   final DateTime? initialDate;
 
+  final double? widthBorder;
+
+  final Color? colorsBorder;
+
   @override
   _PagedVerticalCalendarState createState() => _PagedVerticalCalendarState();
 }
@@ -243,6 +247,8 @@ class _PagedVerticalCalendarState extends State<PagedVerticalCalendar> {
                 builderDelegate: PagedChildBuilderDelegate<Month>(
                   itemBuilder: (BuildContext context, Month month, int index) {
                     return _MonthView(
+                      colorsBorder: widget.colorsBorder,
+                      widthBorder: widget.widthBorder,
                       month: month,
                       monthBuilder: widget.monthBuilder,
                       dayBuilder: widget.dayBuilder,
@@ -257,6 +263,8 @@ class _PagedVerticalCalendarState extends State<PagedVerticalCalendar> {
               builderDelegate: PagedChildBuilderDelegate<Month>(
                 itemBuilder: (BuildContext context, Month month, int index) {
                   return _MonthView(
+                    colorsBorder: widget.colorsBorder,
+                    widthBorder: widget.widthBorder,
                     month: month,
                     monthBuilder: widget.monthBuilder,
                     dayBuilder: widget.dayBuilder,
