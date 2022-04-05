@@ -253,8 +253,8 @@ class _PagedVerticalCalendarState extends State<PagedVerticalCalendar> {
                 builderDelegate: PagedChildBuilderDelegate<Month>(
                   itemBuilder: (BuildContext context, Month month, int index) {
                     return _MonthView(
-                      height: height,
-                      width: width,
+                      height: widget.height,
+                      width: widget.width,
                       colorsBorder: widget.colorsBorder,
                       widthBorder: widget.widthBorder,
                       month: month,
