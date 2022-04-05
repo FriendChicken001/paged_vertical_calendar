@@ -240,22 +240,52 @@ class _PagedVerticalCalendarState extends State<PagedVerticalCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    return PagedSliverList(
-      pagingController: _pagingReplyUpController,
-      builderDelegate: PagedChildBuilderDelegate<Month>(
-        itemBuilder: (BuildContext context, Month month, int index) {
-          return _MonthView(
-            height: widget.height,
-            width: widget.width,
-            colorsBorder: widget.colorsBorder,
-            widthBorder: widget.widthBorder,
-            month: month,
-            monthBuilder: widget.monthBuilder,
-            dayBuilder: widget.dayBuilder,
-            onDayPressed: widget.onDayPressed,
-          );
-        },
-      ),
+    return Scrollable(
+      controller: widget.scrollController,
+      viewportBuilder: (BuildContext context, ViewportOffset position) {
+        return Viewport(
+          offset: position,
+          center: downListKey,
+          slivers: [
+            if (hideUp)
+              PagedSliverList(
+                pagingController: _pagingReplyUpController,
+                builderDelegate: PagedChildBuilderDelegate<Month>(
+                  itemBuilder: (BuildContext context, Month month, int index) {
+                    return _MonthView(
+                      height: widget.height,
+                      width: widget.width,
+                      colorsBorder: widget.colorsBorder,
+                      widthBorder: widget.widthBorder,
+                      month: month,
+                      monthBuilder: widget.monthBuilder,
+                      dayBuilder: widget.dayBuilder,
+                      onDayPressed: widget.onDayPressed,
+                    );
+                  },
+                ),
+              ),
+            PagedSliverList(
+              key: downListKey,
+              pagingController: _pagingReplyDownController,
+              builderDelegate: PagedChildBuilderDelegate<Month>(
+                itemBuilder: (BuildContext context, Month month, int index) {
+                  return _MonthView(
+                    height: widget.height,
+                    width: widget.width,
+                    colorsBorder: widget.colorsBorder,
+                    widthBorder: widget.widthBorder,
+                    month: month,
+                    monthBuilder: widget.monthBuilder,
+                    dayBuilder: widget.dayBuilder,
+                    onDayPressed: widget.onDayPressed,
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -303,12 +333,12 @@ class _MonthView extends StatelessWidget {
               inside: BorderSide(
                   width: widthBorder ?? 1, color: colorsBorder ?? Colors.black),
               outside:
-                  BorderSide(width: 2, color: colorsBorder ?? Colors.black)),
+                  BorderSide(width: 1.5, color: colorsBorder ?? Colors.black)),
           children: month.weeks.map((Week week) {
             return _generateWeekRow(context, week);
           }).toList(growable: false),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
       ],
